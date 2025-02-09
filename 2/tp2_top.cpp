@@ -46,10 +46,10 @@
 #define SEG_CODE_SIZE   16384
 
 #define SEG_STACK_BASE  0x02000000
-#define SEG_STACK_SIZE  0x00016384
+#define SEG_STACK_SIZE  16384
 
 #define SEG_TTY_BASE    0x90000000
-#define SEG_TTY_SIZE    0x00016384
+#define SEG_TTY_SIZE    16
 
 // Taget indexes definition
 #define ROM_INDEX 0
