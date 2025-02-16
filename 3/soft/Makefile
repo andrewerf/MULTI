@@ -1,3 +1,4 @@
+PATH := /opt/gcc-cross-mipsel/8.2.0/bin:$(PATH)
 LD=mipsel-unknown-elf-ld
 CC=mipsel-unknown-elf-gcc
 AS=mipsel-unknown-elf-as
