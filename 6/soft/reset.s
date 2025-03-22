@@ -30,19 +30,19 @@ reset:
 
 proc0:
     # initialises interrupt vector entries for PROC[0]
-    la  $29,    0x8200031c      # address of _interrupt_vector
-    la  $30,    0x80001c1c      # address of _isr_timer
-    sw  $30,    8($29)          # write to the 3rd place in the _interrupt_vector (in tp5_top.cpp, first place is for DMA, second is for IOC, third is for TIMER)
+    la  $10,    0x8200031c      # address of _interrupt_vector
+    la  $11,    0x80001c1c      # address of _isr_timer
+    sw  $11,    8($10)          # write to the 3rd place in the _interrupt_vector (in tp5_top.cpp, first place is for DMA, second is for IOC, third is for TIMER)
     # initializes the ICU[0] MASK register
-    la  $29,    0x9f000000      # address of ICU
-    li  $30,    0x00000004      # 4 in HEX == 100 in binary, which activates 3rd interruption
-    sw  $30,    8($29)          # write to ICU_SET for ICU[0]
+    la  $10,    0x9f000000      # address of ICU
+    li  $11,    0x00000004      # 4 in HEX == 100 in binary, which activates 3rd interruption
+    sw  $11,    8($10)          # write to ICU_SET for ICU[0]
     # initializes TIMER[0] PERIOD and RUNNING registers
-    la  $29,    0x91000000      # address of TIMER
-    li  $30,    0x0000c350      # 50000 in HEX
-    sw  $30,    8($29)          # write to TIMER_PERIOD for TIMER[0]
-    li  $30,    0x00000003      # 3 == 11 in binary, i.e. both bits of TIMER_MODE
-    sw  $30,    4($29)          # write to TIMER_MODE for TIMER[0]
+    la  $10,    0x91000000      # address of TIMER
+    li  $11,    0x0000c350      # 50000 in HEX
+    sw  $11,    8($10)          # write to TIMER_PERIOD for TIMER[0]
+    li  $11,    0x00000003      # 3 == 11 in binary, i.e. both bits of TIMER_MODE
+    sw  $11,    4($10)          # write to TIMER_MODE for TIMER[0]
     # initializes stack pointer for PROC[0]
     la    $29,    seg_stack_base
     li    $27,    0x10000        # stack size = 64K
