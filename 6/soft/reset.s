@@ -27,6 +27,7 @@ reset:
     mfc0  $27,    $15,    1      # get the proc_id
     andi  $27,    $27,    0x1    # no more than 2 processors
     bne   $27,    $0,     proc1
+    nop
 
 proc0:
     # initialises interrupt vector entries for PROC[0]
