@@ -61,8 +61,19 @@ proc0:
 
 proc1:
     # initialises interrupt vector entries for PROC[1]
+    la  $10,    0x8200031c
+    la  $11,    0x80001c1c
+    sw  $11,    8($10)
     # initializes the ICU[1] MASK register
+    la  $10,    0x9f000000
+    li  $11,    0x00000004
+    sw  $11,    40($10)
     # initializes TIMER[1] PERIOD and RUNNING registers
+    la  $10,    0x91000000
+    li  $11,    0x000186a0      # 100000 in HEX
+    sw  $11,    24($10)
+    li  $11,    0x00000003
+    sw  $11,    20($10)
     # initializes stack pointer for PROC[1]
     la    $29,    seg_stack_base
     li    $27,    0x20000        # stack size = 128K
