@@ -31,8 +31,8 @@ reset:
 
 proc0:
     # initialises interrupt vector entries for PROC[0]
-    la  $10,    0x8200031c      # address of _interrupt_vector
-    la  $11,    0x80001c1c      # address of _isr_timer
+    la  $10,    _interrupt_vector
+    la  $11,    _isr_timer
     sw  $11,    8($10)          # write to the 3rd place in the _interrupt_vector (in tp5_top.cpp, first place is for DMA, second is for IOC, third is for TIMER)
     # initializes the ICU[0] MASK register
     la  $10,    0x9f000000      # address of ICU
@@ -61,8 +61,8 @@ proc0:
 
 proc1:
     # initialises interrupt vector entries for PROC[1]
-    la  $10,    0x8200031c
-    la  $11,    0x80001c1c
+    la  $10,    _interrupt_vector
+    la  $11,    _isr_timer
     sw  $11,    8($10)
     # initializes the ICU[1] MASK register
     la  $10,    0x9f000000
