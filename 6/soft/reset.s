@@ -34,10 +34,14 @@ proc0:
     la  $10,    _interrupt_vector
     la  $11,    _isr_timer
     sw  $11,    8($10)          # write to the 3rd place in the _interrupt_vector (in tp5_top.cpp, first place is for DMA, second is for IOC, third is for TIMER)
+    la  $11,    _isr_tty_get
+    sw  $11,    12($10)         # 4th place
     # initializes the ICU[0] MASK register
     la  $10,    0x9f000000      # address of ICU
-    li  $11,    0x00000004      # 4 in HEX == 100 in binary, which activates 3rd interruption
+    li  $11,    0x00000004      # 4 in HEX == 100 in binary, which activates 3rd interruption -- for TIMER
     sw  $11,    8($10)          # write to ICU_SET for ICU[0]
+    li  $11,    0x00000008      # 1000 in binary  -- for TTY
+    sw  $11,    8($10)         # route TTY
     # initializes TIMER[0] PERIOD and RUNNING registers
     la  $10,    0x91000000      # address of TIMER
     li  $11,    0x0000c350      # 50000 in HEX
@@ -64,10 +68,14 @@ proc1:
     la  $10,    _interrupt_vector
     la  $11,    _isr_timer
     sw  $11,    16($10)         # 5th place
+    la  $11,    _isr_tty_get
+    sw  $11,    20($10)         # 6th place
     # initializes the ICU[1] MASK register
     la  $10,    0x9f000000
     li  $11,    0x00000010      # 10000 in binary
-    sw  $11,    40($10)
+    # sw  $11,    40($10)         # uncomment to process interruptions from the timer
+    li  $11,    0x00000020      # 100000 in binary
+    sw  $11,    40($10)         # route TTY
     # initializes TIMER[1] PERIOD and RUNNING registers
     la  $10,    0x91000000
     li  $11,    0x000186a0      # 100000 in HEX
