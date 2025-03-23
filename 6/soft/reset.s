@@ -63,10 +63,10 @@ proc1:
     # initialises interrupt vector entries for PROC[1]
     la  $10,    _interrupt_vector
     la  $11,    _isr_timer
-    sw  $11,    8($10)
+    sw  $11,    16($10)         # 5th place
     # initializes the ICU[1] MASK register
     la  $10,    0x9f000000
-    li  $11,    0x00000004
+    li  $11,    0x00000010      # 10000 in binary
     sw  $11,    40($10)
     # initializes TIMER[1] PERIOD and RUNNING registers
     la  $10,    0x91000000
