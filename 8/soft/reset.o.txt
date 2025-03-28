@@ -1,0 +1,151 @@
+
+reset.o:     file format elf32-littlemips
+
+
+Disassembly of section .reginfo:
+
+00000000 <.reginfo>:
+   0:	3c000000 	lui	zero,0x0
+	...
+
+Disassembly of section .MIPS.abiflags:
+
+00000000 <.MIPS.abiflags>:
+   0:	01200000 	0x1200000
+   4:	01000101 	0x1000101
+	...
+  10:	00000001 	movf	zero,zero,$fcc0
+  14:	00000000 	nop
+
+Disassembly of section .reset:
+
+00000000 <reset>:
+   0:	401b7801 	mfc0	k1,$15,1
+   4:	337b0003 	andi	k1,k1,0x3
+   8:	241a0000 	li	k0,0
+   c:	137a0007 	beq	k1,k0,2c <proc0>
+  10:	241a0001 	li	k0,1
+  14:	137a0023 	beq	k1,k0,a4 <proc1>
+  18:	241a0002 	li	k0,2
+  1c:	137a0039 	beq	k1,k0,104 <proc2>
+  20:	241a0003 	li	k0,3
+  24:	137a004f 	beq	k1,k0,164 <proc3>
+  28:	00000000 	nop
+
+0000002c <proc0>:
+  2c:	3c1a0000 	lui	k0,0x0
+  30:	275a0000 	addiu	k0,k0,0
+  34:	3c1b0000 	lui	k1,0x0
+  38:	277b0000 	addiu	k1,k1,0
+  3c:	af5b0000 	sw	k1,0(k0)
+  40:	3c1b0000 	lui	k1,0x0
+  44:	277b0000 	addiu	k1,k1,0
+  48:	af5b0004 	sw	k1,4(k0)
+  4c:	3c1b0000 	lui	k1,0x0
+  50:	277b0000 	addiu	k1,k1,0
+  54:	af5b0008 	sw	k1,8(k0)
+  58:	3c1b0000 	lui	k1,0x0
+  5c:	277b0000 	addiu	k1,k1,0
+  60:	af5b000c 	sw	k1,12(k0)
+  64:	3c1a0000 	lui	k0,0x0
+  68:	275a0000 	addiu	k0,k0,0
+  6c:	275a0000 	addiu	k0,k0,0
+  70:	241b000f 	li	k1,15
+  74:	af5b0008 	sw	k1,8(k0)
+  78:	3c1d0000 	lui	sp,0x0
+  7c:	27bd0000 	addiu	sp,sp,0
+  80:	3c1b0001 	lui	k1,0x1
+  84:	03bbe821 	addu	sp,sp,k1
+  88:	341aff13 	li	k0,0xff13
+  8c:	409a6000 	mtc0	k0,c0_status
+  90:	3c1a0000 	lui	k0,0x0
+  94:	275a0000 	addiu	k0,k0,0
+  98:	8f5a0000 	lw	k0,0(k0)
+  9c:	409a7000 	mtc0	k0,c0_epc
+  a0:	42000018 	eret
+
+000000a4 <proc1>:
+  a4:	3c1a0000 	lui	k0,0x0
+  a8:	275a0000 	addiu	k0,k0,0
+  ac:	3c1b0000 	lui	k1,0x0
+  b0:	277b0000 	addiu	k1,k1,0
+  b4:	af5b0010 	sw	k1,16(k0)
+  b8:	3c1b0000 	lui	k1,0x0
+  bc:	277b0000 	addiu	k1,k1,0
+  c0:	af5b0014 	sw	k1,20(k0)
+  c4:	3c1a0000 	lui	k0,0x0
+  c8:	275a0000 	addiu	k0,k0,0
+  cc:	275a0020 	addiu	k0,k0,32
+  d0:	241b0030 	li	k1,48
+  d4:	af5b0008 	sw	k1,8(k0)
+  d8:	3c1d0000 	lui	sp,0x0
+  dc:	27bd0000 	addiu	sp,sp,0
+  e0:	3c1b0002 	lui	k1,0x2
+  e4:	03bbe821 	addu	sp,sp,k1
+  e8:	341aff13 	li	k0,0xff13
+  ec:	409a6000 	mtc0	k0,c0_status
+  f0:	3c1a0000 	lui	k0,0x0
+  f4:	275a0000 	addiu	k0,k0,0
+  f8:	8f5a0000 	lw	k0,0(k0)
+  fc:	409a7000 	mtc0	k0,c0_epc
+ 100:	42000018 	eret
+
+00000104 <proc2>:
+ 104:	3c1a0000 	lui	k0,0x0
+ 108:	275a0000 	addiu	k0,k0,0
+ 10c:	3c1b0000 	lui	k1,0x0
+ 110:	277b0000 	addiu	k1,k1,0
+ 114:	af5b0018 	sw	k1,24(k0)
+ 118:	3c1b0000 	lui	k1,0x0
+ 11c:	277b0000 	addiu	k1,k1,0
+ 120:	af5b001c 	sw	k1,28(k0)
+ 124:	3c1a0000 	lui	k0,0x0
+ 128:	275a0000 	addiu	k0,k0,0
+ 12c:	275a0040 	addiu	k0,k0,64
+ 130:	241b00c0 	li	k1,192
+ 134:	af5b0008 	sw	k1,8(k0)
+ 138:	3c1d0000 	lui	sp,0x0
+ 13c:	27bd0000 	addiu	sp,sp,0
+ 140:	3c1b0003 	lui	k1,0x3
+ 144:	03bbe821 	addu	sp,sp,k1
+ 148:	341aff13 	li	k0,0xff13
+ 14c:	409a6000 	mtc0	k0,c0_status
+ 150:	3c1a0000 	lui	k0,0x0
+ 154:	275a0000 	addiu	k0,k0,0
+ 158:	8f5a0000 	lw	k0,0(k0)
+ 15c:	409a7000 	mtc0	k0,c0_epc
+ 160:	42000018 	eret
+
+00000164 <proc3>:
+ 164:	3c1a0000 	lui	k0,0x0
+ 168:	275a0000 	addiu	k0,k0,0
+ 16c:	3c1b0000 	lui	k1,0x0
+ 170:	277b0000 	addiu	k1,k1,0
+ 174:	af5b0020 	sw	k1,32(k0)
+ 178:	3c1b0000 	lui	k1,0x0
+ 17c:	277b0000 	addiu	k1,k1,0
+ 180:	af5b0024 	sw	k1,36(k0)
+ 184:	3c1a0000 	lui	k0,0x0
+ 188:	275a0000 	addiu	k0,k0,0
+ 18c:	275a0060 	addiu	k0,k0,96
+ 190:	241b0300 	li	k1,768
+ 194:	af5b0008 	sw	k1,8(k0)
+ 198:	3c1d0000 	lui	sp,0x0
+ 19c:	27bd0000 	addiu	sp,sp,0
+ 1a0:	3c1b0004 	lui	k1,0x4
+ 1a4:	03bbe821 	addu	sp,sp,k1
+ 1a8:	341aff13 	li	k0,0xff13
+ 1ac:	409a6000 	mtc0	k0,c0_status
+ 1b0:	3c1a0000 	lui	k0,0x0
+ 1b4:	275a0000 	addiu	k0,k0,0
+ 1b8:	8f5a0000 	lw	k0,0(k0)
+ 1bc:	409a7000 	mtc0	k0,c0_epc
+ 1c0:	42000018 	eret
+
+Disassembly of section .gnu.attributes:
+
+00000000 <.gnu.attributes>:
+   0:	00000f41 	0xf41
+   4:	756e6700 	jalx	5b99c00 <proc3+0x5b99a9c>
+   8:	00070100 	sll	zero,a3,0x4
+   c:	01040000 	0x1040000
