@@ -33,13 +33,15 @@ __attribute__ ((constructor)) void main() {
 
     npixels = NB_PIXELS * NB_LINES / nprocs;
     nblocks = npixels / BLOCK_SIZE;
+    const int pixel_offset = pid*npixels;
+    const int block_offset = pid*nblocks;
 
     // main loop
     for (int image = 0; image < 20; image += 1) {
         tty_printf("\n *** image %d au cycle : %d *** \n", image, proctime());
 
         /* Phase 1 : lecture image sur le disque et transfert vers buf_in */
-        if (ioc_read(base, buf_in, nblocks)) {
+        if (ioc_read(base + block_offset, buf_in + pixel_offset, nblocks)) {
             tty_printf("\n!!! echec ioc_read au cycle : %d !!!\n", proctime()); 
             exit();
         }
@@ -51,7 +53,7 @@ __attribute__ ((constructor)) void main() {
 
 
         /* Phase 2 : transfert de buf_in vers buf_out avec seuillage */
-        for (int i = pid * npixels; i < (pid + 1) * npixels; i += 1) {
+        for (int i = pixel_offset; i < (pid + 1) * npixels; i += 1) {
             if (buf_in[i] > THRESHOLD) {
                 buf_out[i] = 255;
             }
@@ -64,7 +66,7 @@ __attribute__ ((constructor)) void main() {
 
         /* Phase 3 : transfert de buf_out vers le frame buffer */
         // fb_sync_write(size_t offset, void* buffer, size_t length)
-        if (fb_sync_write(0, buf_out, npixels)) { 
+        if (fb_sync_write(pixel_offset, buf_out + pixel_offset, npixels)) {
             tty_printf("\n!!! echec fb_write au cycle : %d !!!\n", proctime()); 
             exit();
         }
