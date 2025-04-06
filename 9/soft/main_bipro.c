@@ -34,7 +34,7 @@ __attribute ((constructor)) void producer() {
 
     tty_printf("*** Starting task producer on processor %d ***\n\n", procid());
 
-    for (int n = 0; n < NMAX; n += 1) { 
+    for (int n = 0; n < NMAX; n += 1) {
         for (int x = 0; x < tempo; x += 1) {
             asm volatile ("");
         }
@@ -42,6 +42,7 @@ __attribute ((constructor)) void producer() {
             asm volatile ("");
         }
         BUF = n;
+        __sync_synchronize();
         SYNC = 1;
         tty_printf("transmitted value : %d     temporisation = %d\n", n, tempo);
     }
@@ -66,6 +67,7 @@ __attribute ((constructor)) void consumer() {
             asm volatile("");
         }
         val = BUF;
+        __sync_synchronize();
         SYNC = 0;
         tty_printf("received value : %d     temporisation = %d\n", val, tempo);
     }
