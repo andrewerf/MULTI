@@ -76,12 +76,13 @@ void fifo_write(fifo_t * fifo, int * val) {
     while (done == 0) {
         lock_acquire((lock_t *) (&fifo->lock));
 
-        if (fifo->sts == fifo->depth) {
-            lock_release((lock_t *) (&fifo->lock));
+        if (fifo->sts < fifo->depth) {
+            fifo->buf[fifo->ptw] = *val;
+            fifo->ptw = ( fifo->ptw + 1 ) % DEPTH;
+            fifo->sts += 1;
+            done = 1;
         }
-        else {
-            TO BE COMPLETED
-        }
+        lock_release((lock_t *) (&fifo->lock));
     }
 }
 
@@ -92,12 +93,13 @@ void fifo_read(fifo_t * fifo, int * val) {
     while (done == 0) {
         lock_acquire((lock_t *) (&fifo->lock));
 
-        if (fifo->sts == 0) {
-            lock_release((lock_t *) (&fifo->lock));
+        if (fifo->sts > 0) {
+            *val = fifo->buf[fifo->ptr];
+            fifo->ptr = ( fifo->ptr + 1 ) % DEPTH;
+            fifo->sts -= 1;
+            done = 1;
         }
-        else {
-            TO BE COMPLETED
-        }
+        lock_release((lock_t *) (&fifo->lock));
     }
 }
 
