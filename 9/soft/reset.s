@@ -70,9 +70,9 @@ proc0:
     li    $26, 0x0000FF13    
     mtc0  $26, $12               # SR <= 0x0000FF13
     # jump to main in user mode: main[0]
-    la    TO BE COMPLETED   
-    lw    TO BE COMPLETED        # read main[0]
-    mtc0  TO BE COMPLETED        # write it in EPC register
+    la    $26, seg_data_base
+    lw    $26, 0($26)            # $26 <= producer
+    mtc0  $26, $14               # write it in EPC register
     eret
 
 proc1:
@@ -95,9 +95,9 @@ proc1:
     li    $26, 0x0000FF13    
     mtc0  $26, $12               # SR <= 0x0000FF13
     # jump to main in user mode: main[1]
-    la    TO BE COMPLETED   
-    lw    TO BE COMPLETED        # read main[1]
-    mtc0  TO BE COMPLETED        # write it in EPC register
+    la    $26, seg_data_base
+    lw    $26, 4($26)            # $26 <= consumer
+    mtc0  $26, $14               # write it in EPC register
     eret
 
 proc2:
