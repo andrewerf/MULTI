@@ -25,6 +25,7 @@
 #define CONSUMER_DELAY 100
 
 volatile int BUF = 0;
+volatile int SYNC = 0; // 0 means it is owned by producer. 1 means it is owned by consumer.
 
 
 __attribute ((constructor)) void producer() {
@@ -37,7 +38,11 @@ __attribute ((constructor)) void producer() {
         for (int x = 0; x < tempo; x += 1) {
             asm volatile ("");
         }
+        while ( SYNC == 1 ) {
+            asm volatile ("");
+        }
         BUF = n;
+        SYNC = 1;
         tty_printf("transmitted value : %d     temporisation = %d\n", n, tempo);
     }
 
@@ -57,7 +62,11 @@ __attribute ((constructor)) void consumer() {
         for (int x = 0; x < tempo; x += 1) {
             asm volatile ("");
         }
+        while ( SYNC == 0 ){
+            asm volatile("");
+        }
         val = BUF;
+        SYNC = 0;
         tty_printf("received value : %d     temporisation = %d\n", val, tempo);
     }
 
