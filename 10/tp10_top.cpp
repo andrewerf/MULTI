@@ -439,36 +439,36 @@ int _main (int argc, char * argv[]) {
     icu.p_d     (signal_pi_d);
     icu.p_tout  (signal_pi_tout);
     // IOC
-    icu.p_irq_in[0]       TO BE COMPLETED
+    icu.p_irq_in[0](signal_irq_ioc);    // TO BE COMPLETED
     // in : unused
     for (int x = 1; x < 8; x += 1) {
-        icu.p_irq_in[x]        TO BE COMPLETED
+        icu.p_irq_in[x](signal_irq_false);        // TO BE COMPLETED
     }
     // in : TIMER & DMA
     for (int p = 0; p < 4; p += 1) {
         if (p < nprocs) {
-            icu.p_irq_in[8 + p]    TO BE COMPLETED
-            icu.p_irq_in[12 + p]    TO BE COMPLETED
+            icu.p_irq_in[8 + p](signal_irq_dma[p]);    //TO BE COMPLETED
+            icu.p_irq_in[12 + p](signal_irq_tim[p]);    //TO BE COMPLETED
         }
         else {
-            icu.p_irq_in[8 + p]    TO BE COMPLETED
-            icu.p_irq_in[12 + p]    TO BE COMPLETED
+            icu.p_irq_in[8 + p](signal_irq_false);    //TO BE COMPLETED
+            icu.p_irq_in[12 + p](signal_irq_false);    //TO BE COMPLETED
         }
     }
     // in : TTY
     for (int p = 0; p < 4; p += 1) {
         for (int t = 0; t < 4; t += 1) {
             if ((p < nprocs) and (t < 4)) {
-                icu.p_irq_in[16 + p * 4 + t]    TO BE COMPLETED
+                icu.p_irq_in[16 + p * 4 + t](signal_irq_tty_get[p*4+t]);    //TO BE COMPLETED
             }
             else {
-                icu.p_irq_in[16 + p * 4 + t]    TO BE COMPLETED  
+                icu.p_irq_in[16 + p * 4 + t](signal_irq_false);   //  TO BE COMPLETED  
             }
         }
     }
     // out : procs
     for (int p = 0; p < nprocs; p += 1) {
-        icu.p_irq_out[p]      TO BE COMPLETED       
+        icu.p_irq_out[p](signal_irq_proc[p]);    // TO BE COMPLETED       
     }
    
     std::cout << "icu : connected" << std::endl;
