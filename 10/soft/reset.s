@@ -85,18 +85,18 @@ reset:
     la    $7, seg_data_base
     la    $8, tasks_entry_point
 
-    lw    $9, 0($7)              # seg_data[0]
+    lw    $9, 0($7)              # seg_data[0] == pgcd
     sw    $9, 0($8)              # set task_entry_point[0]
-    lw    $9, 4($7)              # seg_data[1]
+    lw    $9, 8($7)              # seg_data[1] == producer
     sw    $9, 4($8)              # set task_entry_point[1]
-    lw    $9, 8($7)              # seg_data[2]
+    la    $9, _exit              # seg_data[2]
     sw    $9, 8($8)              # set task_entry_point[2]
-    lw    $9, 12($7)             # seg_data[3]
+    la    $9, _exit              # seg_data[3]
     sw    $9, 12($8)             # set task_entry_point[3]
 
-    la    $9, _exit 
+    lw    $9, 4($7)              # display
     sw    $9, 16($8)             # set task_entry_point[4]
-    la    $9, _exit 
+    lw    $9, 12($7)             # consumer
     sw    $9, 20($8)             # set task_entry_point[5] 
     la    $9, _exit 
     sw    $9, 24($8)             # set task_entry_point[6]
@@ -125,9 +125,9 @@ reset:
     # we must define the actual number of tasks assigned to each processor
     # this must be consistent with the task_entry_point array above.
     la    $8, _task_number_array
-    li    $9, 4
+    li    $9, 2
     sb    $9, 0($8)              # set_ task_number_array[0]
-    li    $9, 0
+    li    $9, 2
     sb    $9, 1($8)              # set _task_number_array[1]
     li    $9, 0
     sb    $9, 2($8)              # set _task_number_array[2]
